@@ -6,3 +6,4 @@ well, and I couldn't get it to run, so I made my own.
 - Python 3
 - [PyExifTool](https://github.com/sylikc/pyexiftool)
 - [ExifTool](https://exiftool.org/)
+- [pyyaml](https://pyyaml.org/wiki/PyYAMLDocumentation)
