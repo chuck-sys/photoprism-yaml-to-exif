@@ -140,6 +140,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
 
     if args.dry_run:
         logger.info(f'Faking writing {len(tags_to_edit)} tags to file {photos_file}')
+        logger.debug(f'Tags: {tags_to_edit}')
     else:
         try:
             eft.set_tags(
