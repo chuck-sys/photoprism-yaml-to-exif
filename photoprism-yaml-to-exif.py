@@ -122,7 +122,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
 
     try:
         original_tags = eft.get_tags(photos_file)
-    except exiftool.ExifToolExecuteError:
+    except exiftool.exceptions.ExifToolExecuteError:
         logger.warning('Couldn\'t get tags from the original photo file {photos_file}')
         return
 
@@ -147,7 +147,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
                 tags=tags_to_edit,
             )
             logger.info('Wrote {len(tags_to_edit)} tags to file {photos_file}')
-        except exiftool.ExifToolExecuteError:
+        except exiftool.exceptions.ExifToolExecuteError:
             logger.error('Could not write {len(tags_to_edit)} tags to file {photos_file}')
 
 
