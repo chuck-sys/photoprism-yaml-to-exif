@@ -198,7 +198,7 @@ def main():
         return
 
     with exiftool.ExifToolHelper(executable=args.exiftool, logger=logger) as eft:
-        traverse_dirs(eft, args, '')
+        traverse_dir(eft, args, '')
 
 
 if __name__ == '__main__':
