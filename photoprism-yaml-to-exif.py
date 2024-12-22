@@ -157,7 +157,18 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
                                       day=yaml_sidecar['Day'])
                     tags_to_edit['DateTimeOriginal'] = d.isoformat()
                 except ValueError:
-                    logger.error(f'Bad date value {yaml_sidecar["Year"]}-{yaml_sidecar["Month"]}-{yaml_sidecar["Day"]}')
+                    d = datetime.date(year=1, month=1, day=1)
+                    if yaml_sidecar['Year'] > 0:
+                        d.year = yaml_sidecar['Year']
+                        if yaml_sidecar['Month'] > 0:
+                            d.month = yaml_sidecar['Month']
+                        if yaml_sidecar['Day'] > 0:
+                            d.day = yaml_sidecar['Day']
+
+                        tags_to_edit['DateTimeOriginal'] = d.isoformat()
+                        logger.warning(f'Incomplete date value; using {d.isoformat()} instead')
+                    else:
+                        logger.error('Year is negative')
 
     if args.details and 'Details' in yaml_sidecar:
         if 'Keywords' in yaml_sidecar['Details']:
