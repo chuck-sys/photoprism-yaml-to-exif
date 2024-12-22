@@ -162,7 +162,7 @@ def traverse_dir(eft: exiftool.ExifToolHelper, args: argparse.Namespace, common_
         if os.path.isdir(os.path.join(args.photos_dir, common_dirs, photos_file)):
             index = bisect.bisect_left(sidecar_files, photos_file)
             if index < len(sidecar_files) and sidecar_files[index] == photos_file:
-                traverse_dir(args, os.path.join(common_dirs, dir_basename))
+                traverse_dir(args, os.path.join(common_dirs, photos_file))
             else:
                 logger.debug(f'Skipping over directory {os.path.join(args.photos_dir, common_dirs, photos_file)}; could not find corresponding sidecar directory.')
         elif os.path.isfile(os.path.join(args.photos_dir, common_dirs, photos_file)):
