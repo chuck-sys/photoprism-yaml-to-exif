@@ -152,9 +152,12 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
                 tags_to_edit['DateTimeOriginal'] = yaml_sidecar['DateTimeOriginal']
         elif 'Year' in yaml_sidecar and 'Month' in yaml_sidecar and 'Day' in yaml_sidecar:
             if args.overwrite or 'DateTimeOriginal' not in original_tags:
-                d = datetime.date(year=yaml_sidecar['Year'], month=yaml_sidecar['Month'],
-                                  day=yaml_sidecar['Day'])
-                tags_to_edit['DateTimeOriginal'] = d.isoformat()
+                try:
+                    d = datetime.date(year=yaml_sidecar['Year'], month=yaml_sidecar['Month'],
+                                      day=yaml_sidecar['Day'])
+                    tags_to_edit['DateTimeOriginal'] = d.isoformat()
+                except ValueError:
+                    logger.error(f'Bad date value {yaml_sidecar["Year"]}-{yaml_sidecar["Month"]}-{yaml_sidecar["Day"]}')
 
     if args.details and 'Details' in yaml_sidecar:
         if 'Keywords' in yaml_sidecar['Details']:
