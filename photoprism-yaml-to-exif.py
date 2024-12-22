@@ -156,7 +156,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
             logger.error('Could not write {len(tags_to_edit)} tags to file {photos_file}')
 
 
-def traverse_dir(eft: exiftool.ExifToolHelper, args: argparse.Namespace, common_dirs: str, photos_dir: str):
+def traverse_dir(eft: exiftool.ExifToolHelper, args: argparse.Namespace, common_dirs: str):
     sidecar_files = sorted(os.listdir(os.path.join(args.sidecar_dir, common_dirs)))
     photos_files = os.listdir(os.path.join(args.photos_dir, common_dirs))
 
