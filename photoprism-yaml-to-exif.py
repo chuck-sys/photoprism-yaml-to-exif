@@ -1,9 +1,4 @@
 from yaml import safe_load
-try:
-    # try for libyaml-based parser (faster)
-    from yaml import CLoader as Loader
-except ImportError:
-    from yaml import Loader
 import exiftool
 import argparse
 import logging
@@ -123,7 +118,7 @@ def get_parser() -> argparse.ArgumentParser:
 
 def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_file: str, photos_file: str):
     with open(sidecar_file, 'r') as f:
-        yaml_sidecar = safe_load(f, Loader=Loader)
+        yaml_sidecar = safe_load(f)
 
     try:
         original_tags = eft.get_tags(photos_file)
