@@ -193,7 +193,7 @@ def main():
         logger.error(f'Directory {args.photos_dir} does not exist!')
         return
 
-    with exiftool.ExifToolHelper(executable=args.exiftool, logger=logger) as eft:
+    with exiftool.ExifToolHelper(executable=args.exiftool) as eft:
         traverse_dir(eft, args, '')
 
 
