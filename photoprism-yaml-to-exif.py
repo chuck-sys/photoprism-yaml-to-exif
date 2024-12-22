@@ -123,7 +123,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
     try:
         original_tags = eft.get_tags(photos_file, tags=[])
     except exiftool.exceptions.ExifToolExecuteError:
-        logger.warning('Couldn\'t get tags from the original photo file {photos_file}')
+        logger.warning(f'Couldn\'t get tags from the original photo file {photos_file}')
         return
 
     tags_to_edit = {}
@@ -139,16 +139,16 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
                 tags_to_edit['Keywords'] = yaml_sidecar['Details']['Keywords'].split(', ')
 
     if args.dry_run:
-        logger.info('Faking writing {len(tags_to_edit)} tags to file {photos_file}')
+        logger.info(f'Faking writing {len(tags_to_edit)} tags to file {photos_file}')
     else:
         try:
             eft.set_tags(
                 photos_file,
                 tags=tags_to_edit,
             )
-            logger.info('Wrote {len(tags_to_edit)} tags to file {photos_file}')
+            logger.info(f'Wrote {len(tags_to_edit)} tags to file {photos_file}')
         except exiftool.exceptions.ExifToolExecuteError:
-            logger.error('Could not write {len(tags_to_edit)} tags to file {photos_file}')
+            logger.error(f'Could not write {len(tags_to_edit)} tags to file {photos_file}')
 
 
 def traverse_dir(eft: exiftool.ExifToolHelper, args: argparse.Namespace, common_dirs: str):
