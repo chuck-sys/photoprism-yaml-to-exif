@@ -121,7 +121,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
         yaml_sidecar = safe_load(f)
 
     try:
-        original_tags = eft.get_tags(photos_file)
+        original_tags = eft.get_tags(photos_file, tags=[])
     except exiftool.exceptions.ExifToolExecuteError:
         logger.warning('Couldn\'t get tags from the original photo file {photos_file}')
         return
