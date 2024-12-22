@@ -155,8 +155,8 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
                 try:
                     d = datetime.date(year=yaml_sidecar['Year'], month=yaml_sidecar['Month'],
                                       day=yaml_sidecar['Day'])
-                    tags_to_edit['DateTimeOriginal'] = d.isoformat().replace('-', ':')
-                    tags_to_edit['PhotoTakenTimeTimestamp'] = d.isoformat().replace('-', ':')
+                    tags_to_edit['DateTimeOriginal'] = d.isoformat().replace('-', ':') + ' 00:00:00'
+                    tags_to_edit['PhotoTakenTimeTimestamp'] = d.isoformat().replace('-', ':') + ' 00:00:00'
                 except ValueError:
                     if yaml_sidecar['Year'] > 0:
                         d = datetime.date(
@@ -165,8 +165,8 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
                             day=max(1, yaml_sidecar['Day']),
                         )
 
-                        tags_to_edit['DateTimeOriginal'] = d.isoformat().replace('-', ':')
-                        tags_to_edit['PhotoTakenTimeTimestamp'] = d.isoformat().replace('-', ':')
+                        tags_to_edit['DateTimeOriginal'] = d.isoformat().replace('-', ':') + ' 00:00:00'
+                        tags_to_edit['PhotoTakenTimeTimestamp'] = d.isoformat().replace('-', ':') + ' 00:00:00'
                         logger.warning(f'Incomplete date value; using {d.isoformat()} instead')
                     else:
                         logger.error('Year is negative')
