@@ -173,6 +173,7 @@ def traverse_dir(eft: exiftool.ExifToolHelper, args: argparse.Namespace, common_
             index = bisect.bisect_left(sidecar_files, path + '.yml')
             if index < len(sidecar_files) and sidecar_files[index] == path + '.yml':
                 do_the_file(
+                    eft,
                     args,
                     os.path.join(args.sidecar_dir, common_dirs, sidecar_files[index]),
                     os.path.join(args.photos_dir, common_dirs, photos_file),
