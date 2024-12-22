@@ -25,7 +25,6 @@ YAML_TO_EXIF = {
 
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog='Photoprism YAML to EXIF',
         description='Convert Photoprism YAML sidecars to the original EXIF data.',
         epilog='Loosely based on https://github.com/JiCiT/photo_prism_yaml_to_exif Perl script.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -97,8 +96,8 @@ def get_parser() -> argparse.ArgumentParser:
         default=True,
     )
     parser.add_argument(
-        '--create-date',
-        help='Adjust create date.',
+        '--details',
+        help='Adjust orginal details (keywords only).',
         required=False,
         action=argparse.BooleanOptionalAction,
         default=True,
@@ -147,7 +146,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
             else:
                 tags_to_edit['GPSLongitudeRef'] = 'W'
 
-    if 'Details' in yaml_sidecar:
+    if args.details and 'Details' in yaml_sidecar:
         if 'Keywords' in yaml_sidecar['Details']:
             if 'Keywords' not in original_tags:
                 tags_to_edit['Keywords'] = yaml_sidecar['Details']['Keywords'].split(', ')
