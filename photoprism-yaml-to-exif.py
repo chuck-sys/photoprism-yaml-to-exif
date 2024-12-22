@@ -17,8 +17,8 @@ LOGGING_LEVELS = {
     'error': logging.ERROR,
 }
 YAML_TO_EXIF = {
-    'latitude': ['Lat', 'GPSLatitude'],
-    'longitude': ['Lng', 'GPSLongitude'],
+    'latitude': ['Lat', 'GPSLatitude*'],
+    'longitude': ['Lng', 'GPSLongitude*'],
     'altitude': ['Alt', 'GPSAltitude*'],
     'iso': ['ISO', 'ISO'],
     'datetime_original': ['DateTimeOriginal', 'DateTimeOriginal'],
