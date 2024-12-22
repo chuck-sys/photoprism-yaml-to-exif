@@ -129,7 +129,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
     tags_to_edit = {}
     for arg_name, data in YAML_TO_EXIF.items():
         sidecar_label, exif_label = data
-        if args[arg_name] and sidecar_label in yaml_sidecar:
+        if getattr(args, arg_name) and sidecar_label in yaml_sidecar:
             if args.overwrite or exif_label not in original_tags:
                 tags_to_edit[exif_label] = yaml_sidecar[sidecar_label]
 
