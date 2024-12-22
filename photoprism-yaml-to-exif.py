@@ -5,6 +5,7 @@ import logging
 import os
 import os.path
 import bisect
+import datetime
 
 
 FORMAT = '%(asctime)s %(message)s'
@@ -19,7 +20,6 @@ LOGGING_LEVELS = {
 YAML_TO_EXIF = {
     'altitude': ['Alt', 'GPSAltitude'],
     'iso': ['ISO', 'ISO'],
-    'datetime_original': ['DateTimeOriginal', 'DateTimeOriginal'],
 }
 
 
@@ -145,6 +145,16 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
                 tags_to_edit['GPSLongitudeRef'] = 'E'
             else:
                 tags_to_edit['GPSLongitudeRef'] = 'W'
+
+    if args.datetime_original:
+        if 'DateTimeOriginal' in yaml_sidecar:
+            if args.overwrite or 'DateTimeOriginal' not in original_tags:
+                tags_to_edit['DateTimeOriginal'] = yaml_sidecar['DateTimeOriginal']
+        elif 'Year' in yaml_sidecar and 'Month' in yaml_sidecar and 'Day' in yaml_sidecar:
+            if args.overwrite or 'DateTimeOriginal' not in original_tags:
+                d = datetime.date(year=yaml_sidecar['Year'], month=yaml_sidecar['Month'],
+                                  day=yaml_sidecar['Day'])
+                tags_to_edit['DateTimeOriginal'] = d.isoformat()
 
     if args.details and 'Details' in yaml_sidecar:
         if 'Keywords' in yaml_sidecar['Details']:
