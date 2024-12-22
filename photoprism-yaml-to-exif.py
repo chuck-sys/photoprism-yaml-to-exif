@@ -17,9 +17,7 @@ LOGGING_LEVELS = {
     'error': logging.ERROR,
 }
 YAML_TO_EXIF = {
-    'latitude': ['Lat', 'GPSLatitude*'],
-    'longitude': ['Lng', 'GPSLongitude*'],
-    'altitude': ['Alt', 'GPSAltitude*'],
+    'altitude': ['Alt', 'GPSAltitude'],
     'iso': ['ISO', 'ISO'],
     'datetime_original': ['DateTimeOriginal', 'DateTimeOriginal'],
 }
@@ -133,6 +131,22 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
             if args.overwrite or exif_label not in original_tags:
                 tags_to_edit[exif_label] = str(yaml_sidecar[sidecar_label])
 
+    if args.latitude and 'Lat' in yaml_sidecar:
+        if args.overwrite or 'GPSLatitude' not in original_tags:
+            tags_to_edit['GPSLatitude'] = yaml_sidecar['Lat']
+            if yaml_sidecar['Lat'] > 0:
+                tags_to_edit['GPSLatitudeRef'] = 'N'
+            else:
+                tags_to_edit['GPSLatitudeRef'] = 'S'
+
+    if args.longitude and 'Lng' in yaml_sidecar:
+        if args.overwrite or 'GPSLongitude' not in original_tags:
+            tags_to_edit['GPSLongitude'] = yaml_sidecar['Lng']
+            if yaml_sidecar['Lng'] > 0:
+                tags_to_edit['GPSLongitudeRef'] = 'E'
+            else:
+                tags_to_edit['GPSLongitudeRef'] = 'W'
+
     if 'Details' in yaml_sidecar:
         if 'Keywords' in yaml_sidecar['Details']:
             if 'Keywords' not in original_tags:
@@ -194,7 +208,7 @@ def main():
         logger.error(f'Directory {args.photos_dir} does not exist!')
         return
 
-    with exiftool.ExifToolHelper(executable=args.exiftool, logger=logger) as eft:
+    with exiftool.ExifToolHelper(executable=args.exiftool) as eft:
         traverse_dir(eft, args, '')
 
 
