@@ -131,7 +131,7 @@ def do_the_file(eft: exiftool.ExifToolHelper, args: argparse.Namespace, sidecar_
         sidecar_label, exif_label = data
         if getattr(args, arg_name) and sidecar_label in yaml_sidecar:
             if args.overwrite or exif_label not in original_tags:
-                tags_to_edit[exif_label] = yaml_sidecar[sidecar_label]
+                tags_to_edit[exif_label] = str(yaml_sidecar[sidecar_label])
 
     if 'Details' in yaml_sidecar:
         if 'Keywords' in yaml_sidecar['Details']:
